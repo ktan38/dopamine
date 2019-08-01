@@ -75,13 +75,16 @@ def create_agent(sess, environment, agent_name=None, summary_writer=None,
   if not debug_mode:
     summary_writer = None
   if agent_name == 'dqn':
+    print("1111111111111111111")
     return dqn_agent.DQNAgent(sess, num_actions=environment.action_space.n,
                               summary_writer=summary_writer)
   elif agent_name == 'rainbow':
+    print(2222222222222222222222)
     return rainbow_agent.RainbowAgent(
         sess, num_actions=environment.action_space.n,
         summary_writer=summary_writer)
   elif agent_name == 'implicit_quantile':
+    print(3333333333333333333)
     return implicit_quantile_agent.ImplicitQuantileAgent(
         sess, num_actions=environment.action_space.n,
         summary_writer=summary_writer)
@@ -229,6 +232,7 @@ class Runner(object):
     # that we have finished iteration 0 (so we will start from iteration 1).
     latest_checkpoint_version = checkpointer.get_latest_checkpoint_number(
         self._checkpoint_dir)
+    print(latest_checkpoint_version)
     if latest_checkpoint_version >= 0:
       experiment_data = self._checkpointer.load_checkpoint(
           latest_checkpoint_version)
@@ -262,6 +266,7 @@ class Runner(object):
         environment.
     """
     observation, reward, is_terminal, _ = self._environment.step(action)
+    reward = self._agent.process_reward(reward, observation)
     return observation, reward, is_terminal
 
   def _end_episode(self, reward):
