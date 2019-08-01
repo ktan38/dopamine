@@ -1,5 +1,9 @@
 # Dopamine
 
+##### Here, I implement several exploration algorithms to Dopamine's Rainbow DQN Algorithm, specifically on Unity's Obstacle Tower Environment. Link to the papers I implement are below in the References section. Instructions for getting Obstacle Tower set up can be found [here][ObstacleTower].
+
+
+
 <div align="center">
   <img src="https://google.github.io/dopamine/images/dopamine_logo.png"><br><br>
 </div>
@@ -135,6 +139,16 @@ If you want to run some of the other tests you will need to `pip install mock`.
 
 ### Training agents
 
+#### Obstacle tower
+
+Click [here][ObstacleTower] to set up Obstacle Tower. To run the Rainbow Agent with Count-Based Exploration:
+
+```
+python -um dopamine.discrete_domains.train \
+  --base_dir=/tmp/dopamine \
+  --gin_files='dopamine/agents/rainbow/configs/rainbow_otc.gin'
+```
+
 #### Atari games
 
 The entry point to the standard Atari 2600 experiment is
@@ -189,7 +203,6 @@ python -um dopamine.discrete_domains.train \
   --gin_files='dopamine/agents/rainbow/configs/rainbow_acrobot.gin'
 ```
 
-
 ### Install as a library
 An easy, alternative way to install Dopamine is as a Python library:
 
@@ -211,6 +224,12 @@ python -um tests.agents.rainbow.rainbow_agent_test
 ```
 
 ### References
+
+##### Exploration algorithms
+
+[Unifying Count-Based Exploration and Intrinsic Motivation][count]
+
+[Exploration by Random Network Distillation][RND]
 
 [Bellemare et al., *The Arcade Learning Environment: An evaluation platform for
 general agents*. Journal of Artificial Intelligence Research, 2013.][ale]
@@ -249,9 +268,9 @@ If you use Dopamine in your work, we ask that you cite our
   archivePrefix = {arXiv}
 }
 ```
-
-
-
+[RND]: https://arxiv.org/pdf/1810.12894.pdf
+[count]: https://arxiv.org/pdf/1606.01868.pdf
+[ObstacleTower]: https://github.com/Unity-Technologies/obstacle-tower-env
 [machado]: https://jair.org/index.php/jair/article/view/11182
 [ale]: https://jair.org/index.php/jair/article/view/10819
 [dqn]: https://storage.googleapis.com/deepmind-media/dqn/DQNNaturePaper.pdf
