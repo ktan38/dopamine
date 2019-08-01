@@ -27,6 +27,7 @@ import random
 
 from dopamine.discrete_domains import atari_lib
 from dopamine.replay_memory import circular_replay_buffer
+from dopamine.agents.exploration_bonus import ExplorationBonus
 import numpy as np
 import tensorflow as tf
 
@@ -163,6 +164,9 @@ class DQNAgent(object):
     tf.logging.info('\t max_tf_checkpoints_to_keep: %d',
                     max_tf_checkpoints_to_keep)
 
+
+    self.exploration_bonus = ExplorationBonus()
+    self.count_exploration = True
     self.num_actions = num_actions
     self.observation_shape = tuple(observation_shape)
     self.observation_dtype = observation_dtype
@@ -383,6 +387,16 @@ class DQNAgent(object):
     """
     if not self.eval_mode:
       self._store_transition(self._observation, self.action, reward, True)
+
+
+  def process_reward(self, reward, frames):
+    if self.count_exploration:
+      reward += self.exploration_bonus.bonus(frames)
+
+
+    reward = max(-1, min(reward, 1))
+
+    return reward
 
   def _select_action(self):
     """Select an action from the set of available actions.
